@@ -1,6 +1,6 @@
 <?php
 
-namespace FloatingTextStats;
+namespace FloatingPlayerStats;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
@@ -56,8 +56,8 @@ class MainClass extends PluginBase implements Listener {
 		$texter = $text[1]. $br. $text[2]. $br. $text[3]. $br. $text[4]. $br. $text[5]. $br. $text[6];
 
 		$x = $this->config->get("x");
-        $y = $this->config->get("y");
-        $z = $this->config->get("z");
+	        $y = $this->config->get("y");
+	        $z = $this->config->get("z");
 
 		$particle = new FloatingTextParticle(new Vector3($x, $y, $z), $texter, $title);
 		$level->addParticle($particle, [$player]);
