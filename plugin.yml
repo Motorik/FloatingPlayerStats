@@ -1,0 +1,8 @@
+name: FloatingTextStats
+main: FloatingTextStats\MainClass
+version: 0.1
+api: [2.0.0]
+
+author: seetch
+description: Player stats in FloatingText!
+website: https://github.com/seetch/FloatingTextStats
