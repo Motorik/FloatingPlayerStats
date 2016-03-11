@@ -3,6 +3,7 @@ main: FloatingPlayerStats\MainClass
 version: 0.1
 api: [2.0.0]
 
+load: POSTWORLD
 author: seetch
 description: PlayerStats in FloatingText!
 website: https://github.com/seetch/FloatingPlayerStats
