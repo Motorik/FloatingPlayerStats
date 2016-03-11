@@ -1,6 +1,6 @@
 name: FloatingPlayerStats
 main: FloatingPlayerStats\MainClass
-version: 0.1
+version: 0.3
 api: [2.0.0]
 
 load: POSTWORLD
