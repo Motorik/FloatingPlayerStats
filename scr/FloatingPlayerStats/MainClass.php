@@ -12,28 +12,30 @@ use pocketmine\math\Vector3;
 use pocketmine\level\particle\FloatingTextParticle;
 use pocketmine\utils\Config;
 
-class MainClass extends PluginBase implements Listener {
+class MainClass extends PluginBase implements Listener{
 
 	public $stats;
-	private $config;
+	public $config;
 
-	public function onLoad() {
+	public function onLoad(){
 		$this->getLogger()->info(F::WHITE . "I've been loaded!");
 	}
 
-	public function onEnable() {
+	public function onEnable(){
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		$this->stats = $this->getServer()->getPluginManager()->getPlugin("PlayerStats");
 		$this->getLogger()->info(F::DARK_GREEN . "I've been enabled!");
-		if(!is_dir($this->getDataFolder())) { 
-            @mkdir($this->getDataFolder());
-        }
-        $this->config = new Config($this->getDataFolder()."config.yml",Config::YAML);
 
-        $this->config->set("x", "118");
-        $this->config->set("y", "71.5");
-        $this->config->set("z", "100");
-        $this->config->save();
+		if(!file_exists($this->getDataFolder())){
+			$this->getLogger()->info(F::YELLOW . "Created Data Folder!");
+			mkdir($this->getDataFolder());
+		}
+		if(!file_exists($this->getDataFolder() . "config.yml")){
+			(new Config($this->getDataFolder() . "config.yml", Config::YAML, yaml_parse(stream_get_contents($this->getResource("config.yml")))))->save();
+			$this->getLogger()->info(F::YELLOW . "Extracted config.yml!");
+		}
+
+		$this->config = (new Config($this->getDataFolder()."config.yml", Config::YAML))->getAll();
     }
 
 	public function spawnParticle(PlayerJoinEvent $e) {
@@ -55,15 +57,15 @@ class MainClass extends PluginBase implements Listener {
 		$title = F::RESET. $text[0]. F::RESET;
 		$texter = $text[1]. $br. $text[2]. $br. $text[3]. $br. $text[4]. $br. $text[5]. $br. $text[6];
 
-		$x = $this->config->get("x");
-	        $y = $this->config->get("y");
-	        $z = $this->config->get("z");
+		$x = $this->config["X"];
+	        $y = $this->config["Y"];
+	        $z = $this->config["Z"];
 
 		$particle = new FloatingTextParticle(new Vector3($x, $y, $z), $texter, $title);
 		$level->addParticle($particle, [$player]);
 	}
 
-	public function onDisable() {
+	public function onDisable(){
 		$this->getLogger()->info(F::DARK_RED . "I've been disabled!");
 	}
 
